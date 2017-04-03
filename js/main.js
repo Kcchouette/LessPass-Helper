@@ -16,10 +16,10 @@ function createData() {
 	var obj = JSON.parse(json);
 	var site = document.getElementById("site").value;
 	var login = document.getElementById("login").value;
-	var uppercase = document.getElementById("uppercase").value;
-	var lowercase = document.getElementById("lowercase").value;
-	var numbers = document.getElementById("numbers").value;
-	var symbols = document.getElementById("symbols").value;
+	var uppercase = document.getElementById("uppercase").checked;
+	var lowercase = document.getElementById("lowercase").checked;
+	var numbers = document.getElementById("numbers").checked;
+	var symbols = document.getElementById("symbols").checked;
 	var length = document.getElementById("length").value;
 	var counter = document.getElementById("counter").value;
 
