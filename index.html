@@ -2,99 +2,120 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>LessPass</title>
-		<meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">	
+		<meta http-equiv=X-UA-Compatible content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>LessPass Helper</title>
+
+		<link href="css/bootstrap-3.3.7.min.css" rel="stylesheet" type="text/css" />
 	</head>
 	
 	<body>
-	<h1>A LessPass helper</h1>
-	<div style="display: block;" id="importDatas">
-		Where LessPass pure is forked:<br>
-		<input type="text" id="lesspass-emplacement" placeholder="file:///C:/[FOLDER]/lesspass-pure/">
-
-		LessPass JSON file input:<br>
-		<textarea style="width: 381px; height: 345px;" id="lesspass-input"></textarea>
-		<br>
-		<button type="button" onclick="javascript:importData()">Import</button>
-	</div>
-
-	<p id="lesspass-links"></p>
-
-	<div style="display: none;" id="exportDatas">
-		<button type="button" onclick="javascript:toggle_visibility('add-setting')">Add a setting</button>
-			<div style="display: none;" id="add-setting">
-				<input type="text" id="site">
-				<input type="text" id="login">
-				<input type="checkbox" id="uppercase" name="uppercase" value="true">
-				<input type="checkbox" id="lowercase" name="lowercase" value="true">
-				<input type="checkbox" id="numbers" name="numbers" value="true">
-				<input type="checkbox" id="symbols" name="symbols" value="true">
-				<input type="number" id="length" name="length" min="0" value="16">
-				<input type="number" id="counter" name="counter" min="1" value="1">
-				<button type="button" onclick="javascript:createData()">Create</button>
-			</div>
-		LessPass JSON file output:<br>
-		<textarea style="width: 381px; height: 345px;" id="lesspass-output"></textarea>
-	</div>
-
-<script type="text/javascript">
-	function importData() {
-		toggle_visibility("importDatas");
-		var json = document.getElementById("lesspass-input").value;
-		var link = document.getElementById("lesspass-emplacement").value;
-		if (json){
-			var obj = JSON.parse(json);
-			document.getElementById("lesspass-links").innerHTML = parser(obj, link);
-			document.getElementById("lesspass-output").innerHTML = JSON.stringify(obj);
-		}
-		toggle_visibility("exportDatas");
-	}
-
-	function parser(arr, link) {
-		var data = '';
-
-		for(i = 0; i < arr.length; ++i) {
-			data += '<article><h2>' + arr[i].site + '</h2>';
-			data += '<a href="' + link + 'index.html#/?site=' + arr[i].site + '&login=' + arr[i].login + '&uppercase=' + arr[i].uppercase + '&lowercase=' + arr[i].lowercase + '&numbers=' + arr[i].numbers + '&symbols=' + arr[i].symbols + '&length=' + arr[i].length + '&counter=' + arr[i].counter + '&version=2" target="_blank">LessPass Link</a>';
-			data += '<ul>';
-			data += '<li>login: ' + arr[i].login + '</li>';
-			data += '</ul>';
-			data += '</article>';
-		}
-		return data;
-	}
-	
-	function createData() {
-		var json = document.getElementById("lesspass-output").value;
-		var obj = JSON.parse(json);
-
-		var site = document.getElementById("site").value;
-		var login = document.getElementById("login").value;
-		var uppercase = document.getElementById("uppercase").value;
-		var lowercase = document.getElementById("lowercase").value;
-		var numbers = document.getElementById("numbers").value;
-		var symbols = document.getElementById("symbols").value;
-		var length = document.getElementById("length").value;
-		var counter = document.getElementById("counter").value;
 		
-		var nObject = {site:site, login:login, uppercase:uppercase, lowercase:lowercase, numbers:numbers, symbols:symbols, length:length, counter:counter};
-		obj.push(nObject);
+		<div class="container">
 
-		var link = document.getElementById("lesspass-emplacement").value;
-		document.getElementById("lesspass-links").innerHTML = parser(obj, link);
-		document.getElementById("lesspass-output").innerHTML = JSON.stringify(obj);		
-	}
+			<h1>LessPass Helper</h1>
 
-	
-	function toggle_visibility(id) {
-		var e = document.getElementById(id);
-		if(e.style.display == 'block')
-			e.style.display = 'none';
-		else
-			e.style.display = 'block';
-   }
-</script>
+			<div class="row">
+				<div id="importDatas" class="panel panel-default">
+					<div class="panel-heading">
+						<h2 class="panel-title">Import the JSON file</h2>
+					</div>
+					<div class="panel-body">
+						<form class="form-group">
+							<label for="lesspass-emplacement">
+								The location of the clone of LessPass Pure
+							</label>
+							<div class="input-group">
+								<input class="form-control" type="text" id="lesspass-emplacement" placeholder="file:///C:/[FOLDER]/lesspass-pure/" aria-describedby="basic-addon">
+								<span class="input-group-addon" id="basic-addon">index.html#/</span>
+							</div>
+							<br>
+							<label for="lesspass-input">
+								LessPass JSON File Input
+							</label>
+							<br>
+							<textarea class="form-control" rows="5" id="lesspass-input"></textarea>
+							<br>
+							<button class="btn btn-lg btn-primary btn-block" type="button" onclick="javascript:importData();">Import</button>
+						</form>
+					</div>
+				</div>
 
-</body>
+				<div style="display: none;" id="panel-lesspass-links" class="panel panel-default">
+					<div class="panel-heading">
+						<h2 class="panel-title">LessPass Links</h2>
+					</div>
+					<div class="panel-body">
+						<div id="lesspass-links"></div>
+					</div>
+				</div>
+
+				<div style="display: none;" id="exportDatas" class="panel panel-default">
+					<div class="panel-heading">
+						<h2 class="panel-title">Export the JSON file</h2>
+					</div>
+					<div class="panel-body">
+						<button class="btn btn-lg btn-info btn-block" type="button" onclick="javascript:addPasswordProfileButton();">Add a password's profile</button>
+						<br><br>
+						<form id="add-setting" style="display: none;" class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon glyphicon glyphicon-globe" id="basic-addon2"></span>
+								<input class="form-control" type="text" id="site" placeholder="Site" aria-describedby="basic-addon2">
+							</div>
+							<br>
+							<div class="input-group">
+								<span class="input-group-addon glyphicon glyphicon-user" id="basic-addon3"></span>
+								<input class="form-control" type="text" id="login" placeholder="Login" aria-describedby="basic-addon3">
+							</div>
+							<br>
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-default active">
+									<input type="checkbox" autocomplete="off" id="uppercase" name="uppercase" checked>Uppercase
+								</label>
+								<label class="btn btn-default active">
+									<input type="checkbox" autocomplete="off" id="lowercase" name="lowercase" checked>Lowercase
+								</label>
+								<label class="btn btn-default active">
+									<input type="checkbox" autocomplete="off" id="numbers" name="numbers" checked>Numbers
+								</label>
+								<label class="btn btn-default active">
+									<input type="checkbox" autocomplete="off" id="symbols" name="symbols" checked>Symbols
+								</label>
+							</div>
+							<br><br>
+							<label for="length">
+								Length
+							</label>
+							<input class="form-control" type="number" id="length" name="length" min="5" max="35" value="16">
+							<br>
+							<label for="length">
+								Counter
+							</label>
+							<input class="form-control" type="number" id="counter" name="counter" min="1" value="1">
+							<br>
+							<button class="btn btn-lg btn-primary btn-block" type="button" onclick="javascript:createData()">Create the password's profile</button>
+						</form>
+
+						<div id="grp-lesspass-output" >
+							<br>
+							<label for="lesspass-output">
+								LessPass JSON File Output
+							</label>
+							<br>
+							<textarea class="form-control" rows="5" id="lesspass-output"></textarea>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-3.3.7.min.js"></script>
+
+		<script type="text/javascript" src="js/main.js"></script>
+
+	</body>
 </html>
