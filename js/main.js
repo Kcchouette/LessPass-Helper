@@ -13,17 +13,23 @@ function importData() {
 
 function createData() {
 	var json = document.getElementById("lesspass-output").value;
-	var obj = JSON.parse(json);
+	if (json) {
+		var obj = JSON.parse(json);
+	}
+	else {
+		var obj = new Array();
+	}
+
 	var site = document.getElementById("site").value;
 	var login = document.getElementById("login").value;
-	var uppercase = document.getElementById("uppercase").checked;
 	var lowercase = document.getElementById("lowercase").checked;
+	var uppercase = document.getElementById("uppercase").checked;
 	var numbers = document.getElementById("numbers").checked;
 	var symbols = document.getElementById("symbols").checked;
 	var length = document.getElementById("length").value;
 	var counter = document.getElementById("counter").value;
 
-	var nObject = {site:site, login:login, uppercase:uppercase, lowercase:lowercase, numbers:numbers, symbols:symbols, length:length, counter:counter};
+	var nObject = {site:site, login:login, lowercase:lowercase, uppercase:uppercase, numbers:numbers, symbols:symbols, length:length, counter:counter};
 	obj.push(nObject);
 	var link = document.getElementById("lesspass-emplacement").value;
 	document.getElementById("lesspass-links").innerHTML = parser(obj, link);
