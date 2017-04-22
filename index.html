@@ -61,28 +61,30 @@
 						<button class="btn btn-lg btn-info btn-block" type="button" onclick="javascript:addPasswordProfileButton();">Add a password's profile</button>
 						<br><br>
 						<form id="add-setting" style="display: none;" class="form-group">
-							<div class="input-group">
-								<span class="input-group-addon glyphicon glyphicon-globe" id="basic-addon2"></span>
-								<input class="form-control" type="text" id="site" placeholder="Site" aria-describedby="basic-addon2">
+							<div class="inner-addon left-addon">
+								<label for="site" class="sr-only">Site</label>
+								<i class="glyphicon glyphicon-globe"></i>
+								<input type="text" class="form-control" id="site" name="site"  placeholder="Site" autocomplete="off" autocorrect="off" autocapitalize="none">
 							</div>
 							<br>
-							<div class="input-group">
-								<span class="input-group-addon glyphicon glyphicon-user" id="basic-addon3"></span>
-								<input class="form-control" type="text" id="login" placeholder="Login" aria-describedby="basic-addon3">
+							<div class="inner-addon left-addon">
+								<label for="login" class="sr-only">Login</label>
+								<i class="glyphicon glyphicon-user"></i>
+								<input type="text" class="form-control"  id="login" name="login" placeholder="Login" autocomplete="off" autocorrect="off" autocapitalize="none">
 							</div>
 							<br>
 							<div class="btn-group" data-toggle="buttons">
 								<label class="btn btn-default active">
-									<input type="checkbox" autocomplete="off" id="lowercase" name="lowercase" checked>a-z
+									<input type="checkbox" id="lowercase" name="lowercase" checked>a-z
 								</label>
 								<label class="btn btn-default active">
-									<input type="checkbox" autocomplete="off" id="uppercase" name="uppercase" checked>A-Z
+									<input type="checkbox" id="uppercase" name="uppercase" checked>A-Z
 								</label>
 								<label class="btn btn-default active">
-									<input type="checkbox" autocomplete="off" id="numbers" name="numbers" checked>0-9
+									<input type="checkbox" id="numbers" name="numbers" checked>0-9
 								</label>
 								<label class="btn btn-default active">
-									<input type="checkbox" autocomplete="off" id="symbols" name="symbols" checked>%!@
+									<input type="checkbox" id="symbols" name="symbols" checked>%!@
 								</label>
 							</div>
 							<br><br>
@@ -105,7 +107,7 @@
 								LessPass JSON File Output
 							</label>
 							<br>
-							<textarea class="form-control" rows="5" id="lesspass-output"></textarea>
+							<textarea class="form-control" rows="5" id="lesspass-output" readonly></textarea>
 						</div>
 
 					</div>
