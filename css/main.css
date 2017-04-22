@@ -12,7 +12,7 @@
 	border-color: #01549b;
 }
 
-.btn-primary.focus,.btn-primary:focus,
+.btn-primary.focus, .btn-primary:focus,
 .btn-default.active.focus, .btn-default.active:focus {
 	color: #fff;
 	background-color: #0275d8;
@@ -34,8 +34,8 @@
 	border-color: #adadad;
 }
 
-.btn-primary.disabled,.btn-primary:disabled,
-.btn-default.active.disabled,.btn-default.active:disabled, {
+.btn-primary.disabled, .btn-primary:disabled,
+.btn-default.active.disabled, .btn-default.active:disabled {
 	background-color: #0275d8;
 	border-color: #0275d8;
 }
@@ -46,20 +46,49 @@
 	background-color: #fff;
 	border-color: #ccc;
 }
+
 .btn-secondary:hover,
-.btn-default:hover,{
+.btn-default:hover {
 	color: #292b2c;
 	background-color: #e6e6e6;
 	border-color: #adadad;
 }
 
-.btn-secondary.focus,.btn-secondary:focus,
-.btn-default.focus,.btn-default:focus {
+.btn-secondary.focus, .btn-secondary:focus,
+.btn-default.focus, .btn-default:focus {
 	box-shadow: 0 0 0 2px hsla(0,0%,80%,.5)
 }
 
-.btn-secondary.disabled,.btn-secondary:disabled,
-.btn-default.disabled,.btn-default:disabled {
+.btn-secondary.disabled, .btn-secondary:disabled,
+.btn-default.disabled, .btn-default:disabled {
 	background-color: #fff;
 	border-color: #ccc;
+}
+
+
+.inner-addon i {
+	position: absolute;
+	padding: 10px;
+	pointer-events: none;
+	z-index: 10;
+}
+
+.inner-addon {
+	position: relative;
+}
+
+.left-addon i {
+	left: 0;
+}
+
+.right-addon i {
+	right: 0;
+}
+
+.left-addon input {
+	padding-left: 30px;
+}
+
+.right-addon input {
+	padding-right: 30px;
 }
