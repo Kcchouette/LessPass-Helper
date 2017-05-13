@@ -35,6 +35,16 @@ function createData() {
 	document.getElementById("lesspass-links").innerHTML = parser(obj, link);
 	document.getElementById("lesspass-output").innerHTML = JSON.stringify(obj, null, "\t");
 
+	/* init again */
+	document.getElementById("site").value = '';
+	document.getElementById("login").value = '';
+	document.getElementById("lowercase").checked = true;
+	document.getElementById("uppercase").checked = true;
+	document.getElementById("numbers").checked = true;
+	document.getElementById("symbols").checked = true;
+	document.getElementById("length").value = 16;
+	document.getElementById("counter").value = 1;
+
 	addPasswordProfileButton();
 }
 
