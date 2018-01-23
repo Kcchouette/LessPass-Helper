@@ -51,12 +51,14 @@ function createData() {
 function parser(arr, link) {
 	var data = '';
 	for(i = 0; i < arr.length; ++i) {
-		data += '<article><h3>' + arr[i].site + '</h3>';
-		data += '<a href="' + link + 'index.html#/?site=' + encodeURIComponent(arr[i].site) + '&login=' + encodeURIComponent(arr[i].login) + '&lowercase=' + arr[i].lowercase + '&uppercase=' + arr[i].uppercase + '&numbers=' + arr[i].numbers + '&symbols=' + arr[i].symbols + '&length=' + arr[i].length + '&counter=' + arr[i].counter + '&version=2" target="_blank">LessPass Link</a>';
-		data += '<ul>';
-		data += '<li>login: ' + arr[i].login + '</li>';
-		data += '</ul>';
-		data += '</article>';
+		data += '<div class="card"><div class="card-body"><h3 class="card-title">' + arr[i].site + '</h3>';
+		data += '<ul><li>login: <code>' + arr[i].login + '</code></li></ul>';
+		data += '<a href="' + link + 'index.html#/?site=' + encodeURIComponent(arr[i].site) + '&login=' + encodeURIComponent(arr[i].login) + '&lowercase=' + arr[i].lowercase + '&uppercase=' + arr[i].uppercase + '&numbers=' + arr[i].numbers + '&symbols=' + arr[i].symbols + '&length=' + arr[i].length + '&counter=' + arr[i].counter + '&version=2" class="btn btn-default" target="_blank">LessPass Link <span class="glyphicon glyphicon-chevron-right"aria-hidden="true"></span></a>';
+		data += '</div></div>';
+
+		if((i+1) !== arr.length) {
+			data += '<hr>';
+		}
 	}
 	return data;
 }
