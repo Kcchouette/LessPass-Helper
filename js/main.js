@@ -52,7 +52,7 @@ function parser(arr, link) {
 	var data = '';
 	for(i = 0; i < arr.length; ++i) {
 		data += '<article><h3>' + arr[i].site + '</h3>';
-		data += '<a href="' + link + 'index.html#/?site=' + arr[i].site + '&login=' + arr[i].login + '&lowercase=' + arr[i].lowercase + '&uppercase=' + arr[i].uppercase + '&numbers=' + arr[i].numbers + '&symbols=' + arr[i].symbols + '&length=' + arr[i].length + '&counter=' + arr[i].counter + '&version=2" target="_blank">LessPass Link</a>';
+		data += '<a href="' + link + 'index.html#/?site=' + encodeURIComponent(arr[i].site) + '&login=' + encodeURIComponent(arr[i].login) + '&lowercase=' + arr[i].lowercase + '&uppercase=' + arr[i].uppercase + '&numbers=' + arr[i].numbers + '&symbols=' + arr[i].symbols + '&length=' + arr[i].length + '&counter=' + arr[i].counter + '&version=2" target="_blank">LessPass Link</a>';
 		data += '<ul>';
 		data += '<li>login: ' + arr[i].login + '</li>';
 		data += '</ul>';
@@ -61,13 +61,11 @@ function parser(arr, link) {
 	return data;
 }
 
-
 function addPasswordProfileButton() {
 	toggle_visibility('add-setting');
 	toggle_visibility("panel-lesspass-links");
 	toggle_visibility("grp-lesspass-output");
 }
-
 
 function toggle_visibility(id) {
 	var e = document.getElementById(id);
