@@ -6,7 +6,7 @@ An offline webUI to create and generate JSON from your password's profile from L
 
 You can only use this software if you're using [LessPass](https://github.com/lesspass/lesspass) as you password manager.
 
-1. Download/clone LessPass Pure: `git clone https://github.com/lesspass/lesspass.git` or [https://github.com/lesspass/lesspass/archive/main.zip](https://github.com/lesspass/lesspass/archive/main.zip)
+1. Download/clone LessPass Pure: `git clone https://github.com/lesspass/lesspass.git` and go to the tag **9.1.9** or [https://github.com/lesspass/lesspass/archive/refs/tags/9.1.9.zip](https://github.com/lesspass/lesspass/archive/refs/tags/9.1.9.zip)
 2. Copie the file from `packages/lesspass-pure/dist/index.html` to `packages/lesspass-pure/index.html`
 3. Update it using this **sed** command: `sed -i 's/="\//="dist\//g' 'packages/lesspass-pure/index.html'`
 4. Start the webUI in standalone in your internet browser (drag & drop in your browser the index.html file contained in `packages/lesspass-pure`, and you should see in the adress something like `file:///C:/[FOLDER]/lesspass/packagespackages/lesspass-pure/index.html#/`)

@@ -72,15 +72,9 @@ function cardCreation(arr, link) {
 		data += '</div></div></div>';
 		data += '<footer class="card-footer"><div class="card-footer-item"><a href="'
 			+ link + 'index.html#/'
-			+ '?site=' + encodeURIComponent(arr[i].site) 
-			+ '&login=' + encodeURIComponent(arr[i].login) 
-			+ '&lowercase=' + arr[i].lowercase 
-			+ '&uppercase=' + arr[i].uppercase 
-			+ '&numbers=' + arr[i].numbers 
-			+ '&symbols=' + arr[i].symbols 
-			+ '&length=' + arr[i].length 
-			+ '&counter=' + arr[i].counter 
-			+ '&version=2" class="has-text-left" target="_blank">LessPass Link <span class="icon">&#10093;</span>'
+			+ '?passwordProfileEncoded='
+			+ lesspassProfileToLesspassBase64(arr[i].login, arr[i].site, arr[i].uppercase, arr[i].lowercase, arr[i].numbers, arr[i].symbols, arr[i].length, arr[i].counter)
+			+ '" class="has-text-left" target="_blank">LessPass Link <span class="icon">&#10093;</span>'
 			+ '</a></div></footer>';
 		data += '</div></div>';
 
@@ -89,6 +83,21 @@ function cardCreation(arr, link) {
 		}
 	}
 	return data;
+}
+
+function lesspassProfileToLesspassBase64(login, site, uppercase, lowercase, numbers, symbols, length, counter) {
+	const obj = {
+		login: login,
+		site: site,
+		uppercase: uppercase,
+		lowercase: lowercase,
+		numbers: numbers,
+		symbols: symbols,
+		length: length,
+		counter: counter,
+		version: 2,
+	};
+	return encodeURIComponent(btoa(JSON.stringify(obj)));
 }
 
 function addPasswordProfileButton() {
