@@ -1,10 +1,10 @@
 function importData() {
 	toggle_visibility("importDatas");
-	var json = document.getElementById("lesspass-input").value;
-	var link = document.getElementById("lesspass-emplacement").value;
+	const json = document.getElementById("lesspass-input").value;
+	const link = document.getElementById("lesspass-emplacement").value;
 	if (json){
-		var obj = JSON.parse(json);
-		document.getElementById("lesspass-links").innerHTML = parser(obj, link);
+		const obj = JSON.parse(json);
+		document.getElementById("lesspass-links").innerHTML = cardCreation(obj, link);
 		document.getElementById("lesspass-output").innerHTML = JSON.stringify(obj, null, "\t");
 	}
 	toggle_visibility("panel-lesspass-links");
@@ -12,27 +12,37 @@ function importData() {
 }
 
 function createData() {
-	var json = document.getElementById("lesspass-output").value;
+	const json = document.getElementById("lesspass-output").value;
+	let obj;
 	if (json) {
-		var obj = JSON.parse(json);
+		obj = JSON.parse(json);
 	}
 	else {
-		var obj = new Array();
+		obj = new Array();
 	}
 
-	var site = document.getElementById("site").value;
-	var login = document.getElementById("login").value;
-	var lowercase = document.getElementById("lowercase").checked;
-	var uppercase = document.getElementById("uppercase").checked;
-	var numbers = document.getElementById("numbers").checked;
-	var symbols = document.getElementById("symbols").checked;
-	var length = document.getElementById("length").value;
-	var counter = document.getElementById("counter").value;
+	const site = document.getElementById("site").value;
+	const login = document.getElementById("login").value;
+	const lowercase = document.getElementById("lowercase").checked;
+	const uppercase = document.getElementById("uppercase").checked;
+	const numbers = document.getElementById("numbers").checked;
+	const symbols = document.getElementById("symbols").checked;
+	const length = document.getElementById("length").value;
+	const counter = document.getElementById("counter").value;
 
-	var nObject = {site:site, login:login, lowercase:lowercase, uppercase:uppercase, numbers:numbers, symbols:symbols, length:length, counter:counter};
+	const nObject = {
+		site: site, 
+		login: login, 
+		lowercase: lowercase, 
+		uppercase: uppercase, 
+		numbers: numbers, 
+		symbols: symbols, 
+		length: length, 
+		counter: counter
+	};
 	obj.push(nObject);
-	var link = document.getElementById("lesspass-emplacement").value;
-	document.getElementById("lesspass-links").innerHTML = parser(obj, link);
+	const link = document.getElementById("lesspass-emplacement").value;
+	document.getElementById("lesspass-links").innerHTML = cardCreation(obj, link);
 	document.getElementById("lesspass-output").innerHTML = JSON.stringify(obj, null, "\t");
 
 	/* init again */
@@ -48,16 +58,34 @@ function createData() {
 	addPasswordProfileButton();
 }
 
-function parser(arr, link) {
-	var data = '';
+function cardCreation(arr, link) {
+	let data = '';
 	for(i = 0; i < arr.length; ++i) {
-		data += '<div class="card"><div class="card-body"><h3 class="card-title">' + arr[i].site + '</h3>';
-		data += '<ul><li>login: <code>' + arr[i].login + '</code></li></ul>';
-		data += '<a href="' + link + 'index.html#/?site=' + encodeURIComponent(arr[i].site) + '&login=' + encodeURIComponent(arr[i].login) + '&lowercase=' + arr[i].lowercase + '&uppercase=' + arr[i].uppercase + '&numbers=' + arr[i].numbers + '&symbols=' + arr[i].symbols + '&length=' + arr[i].length + '&counter=' + arr[i].counter + '&version=2" class="btn btn-default" target="_blank">LessPass Link <span class="glyphicon glyphicon-chevron-right"aria-hidden="true"></span></a>';
+		if(i%3==0) {
+			data += '<div class="panel-block columns">';
+		}
+		data += '<div class="column is-one-third"><div class="card"><header class="card-header"><p class="card-header-title is-uppercase is-clipped">' + arr[i].site + '</p></header>';
+		data += '<div class="card-content"><div class="content">';
+		data += '<div class="field is-horizontal">';
+		data += '<div class="field-label is-small"><label class="label has-text-grey-light">Login:</label></div>';
+		data += '<div class="field-body"><div class="control"><input class="input is-small" type="text" value="' + arr[i].login + '" readonly></div></div>';
+		data += '</div></div></div>';
+		data += '<footer class="card-footer"><div class="card-footer-item"><a href="'
+			+ link + 'index.html#/'
+			+ '?site=' + encodeURIComponent(arr[i].site) 
+			+ '&login=' + encodeURIComponent(arr[i].login) 
+			+ '&lowercase=' + arr[i].lowercase 
+			+ '&uppercase=' + arr[i].uppercase 
+			+ '&numbers=' + arr[i].numbers 
+			+ '&symbols=' + arr[i].symbols 
+			+ '&length=' + arr[i].length 
+			+ '&counter=' + arr[i].counter 
+			+ '&version=2" class="has-text-left" target="_blank">LessPass Link <span class="icon">&#10093;</span>'
+			+ '</a></div></footer>';
 		data += '</div></div>';
 
-		if((i+1) !== arr.length) {
-			data += '<hr>';
+		if((i+1)%3==0 || (i+1) == arr.length) {
+			data += '</div>';
 		}
 	}
 	return data;
@@ -70,7 +98,7 @@ function addPasswordProfileButton() {
 }
 
 function toggle_visibility(id) {
-	var e = document.getElementById(id);
+	let e = document.getElementById(id);
 	if(e.style.display == 'none')
 		e.style.display = '';
 	else

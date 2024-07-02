@@ -18,5 +18,4 @@ You can only use this software if you're using [LessPass](https://github.com/les
 
 ## External Ressources
 
-`css/bootstrap.min.css` and `js/bootstrap.min.js` come from [Bootstrap](https://getbootstrap.com) v3.3.7<br>
-`js/jquery.min.js` come from [JQuery](https://jquery.com/) v1.12.4
+`css/bulma.min.css` come from [Bulma](https://bulma.io/) v1.0.1<br>
