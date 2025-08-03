@@ -1,74 +1,62 @@
 function importData() {
   toggle_visibility("importDatas");
-  const json = document.getElementById("lesspass-input").value;
-  const link = document.getElementById("lesspass-emplacement").value;
-  if (json) {
-    const obj = JSON.parse(json);
-    document.getElementById("lesspass-links").innerHTML = cardCreation(
-      obj,
-      link,
-    );
-    document.getElementById("lesspass-output").innerHTML = JSON.stringify(
-      obj,
-      null,
-      "\t",
-    );
+  const jsonInput = document.getElementById("lesspass-input").value;
+  const linkBase = document.getElementById("lesspass-emplacement").value;
+  if (jsonInput) {
+    const dataObject = JSON.parse(jsonInput);
+    updateLinksAndOutput(dataObject, linkBase);
   }
   toggle_visibility("panel-lesspass-links");
   toggle_visibility("exportDatas");
 }
 
 function createData() {
-  const json = document.getElementById("lesspass-output").value;
-  let obj;
-  if (json) {
-    obj = JSON.parse(json);
-  } else {
-    obj = new Array();
-  }
+  const jsonOutput = document.getElementById("lesspass-output").value;
+  const dataArray = parseJsonOutput(jsonOutput);
 
-  const site = document.getElementById("site").value;
-  const login = document.getElementById("login").value;
-  const lowercase = document.getElementById("lowercase").checked;
-  const uppercase = document.getElementById("uppercase").checked;
-  const digits = document.getElementById("digits").checked;
-  const symbols = document.getElementById("symbols").checked;
-  const length = document.getElementById("length").value;
-  const counter = document.getElementById("counter").value;
+  const newEntry = gatherFormData();
+  dataArray.push(newEntry);
 
-  const nObject = {
-    site: site,
-    login: login,
-    lowercase: lowercase,
-    uppercase: uppercase,
-    digits: digits,
-    symbols: symbols,
-    length: length,
-    counter: counter,
-  };
-  obj.push(nObject);
-  const link = document.getElementById("lesspass-emplacement").value;
-  document.getElementById("lesspass-links").innerHTML = cardCreation(obj, link);
-  document.getElementById("lesspass-output").innerHTML = JSON.stringify(
-    obj,
-    null,
-    "\t",
-  );
+  const linkBase = document.getElementById("lesspass-emplacement").value;
+
+  updateLinksAndOutput(dataArray, linkBase);
 
   /* init again */
-  document.getElementById("site").value = "";
-  document.getElementById("login").value = "";
-  document.getElementById("lowercase").checked = true;
-  document.getElementById("uppercase").checked = true;
-  document.getElementById("digits").checked = true;
-  document.getElementById("symbols").checked = true;
-  document.getElementById("length").value = 16;
-  document.getElementById("counter").value = 1;
+  resetFormFields();
 
   addPasswordProfileButton();
 }
 
-function cardCreation(arr, link) {
+function gatherFormData() {
+  return {
+    site: document.getElementById("site").value,
+    login: document.getElementById("login").value,
+    lowercase: document.getElementById("lowercase").checked,
+    uppercase: document.getElementById("uppercase").checked,
+    digits: document.getElementById("digits").checked,
+    symbols: document.getElementById("symbols").checked,
+    length: document.getElementById("length").value,
+    counter: document.getElementById("counter").value,
+  };
+}
+
+function parseJsonOutput(jsonOutput) {
+  return jsonOutput ? JSON.parse(jsonOutput) : [];
+}
+
+function updateLinksAndOutput(dataArray, linkBase) {
+  document.getElementById("lesspass-links").innerHTML = createCards(
+    dataArray,
+    linkBase,
+  );
+  document.getElementById("lesspass-output").innerHTML = JSON.stringify(
+    dataArray,
+    null,
+    "\t",
+  );
+}
+
+function createCards(arr, link) {
   let data = "";
 
   arr.forEach((item, index) => {
@@ -99,16 +87,7 @@ function cardCreation(arr, link) {
           </div>
           <footer class="card-footer">
             <div class="card-footer-item">
-              <a href="${link}/?passwordProfileEncoded=${lesspassProfileToLesspassBase64(
-                item.login,
-                item.site,
-                item.uppercase,
-                item.lowercase,
-                item.digits,
-                item.symbols,
-                item.length,
-                item.counter,
-              )}" class="has-text-left" target="_blank">
+            <a href="${generateLink(item, link)}" class="has-text-left" target="_blank">
                   LessPass Link <span class="icon">&#10093;</span>
               </a>
             </div>
@@ -125,29 +104,20 @@ function cardCreation(arr, link) {
   return data;
 }
 
-function lesspassProfileToLesspassBase64(
-  login,
-  site,
-  uppercase,
-  lowercase,
-  digits,
-  symbols,
-  length,
-  counter,
-) {
-  const obj = {
-    login: login,
-    site: site,
-    uppercase: uppercase,
-    lowercase: lowercase,
-    digits: digits,
-    symbols: symbols,
-    length: length,
-    counter: counter,
+const generateLink = (item, link) => {
+  const params = new URLSearchParams({
+    site: item.site,
+    login: item.login,
+    lowercase: item.lowercase,
+    uppercase: item.uppercase,
+    digits: item.digits,
+    symbols: item.symbols,
+    length: item.length,
+    counter: item.counter,
     version: 2,
-  };
-  return encodeURIComponent(btoa(JSON.stringify(obj)));
-}
+  });
+  return `${link}?${params.toString()}`;
+};
 
 function addPasswordProfileButton() {
   toggle_visibility("add-setting");
@@ -156,7 +126,28 @@ function addPasswordProfileButton() {
 }
 
 function toggle_visibility(id) {
-  let e = document.getElementById(id);
-  if (e.style.display == "none") e.style.display = "";
-  else e.style.display = "none";
+  const element = document.getElementById(id);
+  element.style.display = element.style.display === "none" ? "" : "none";
+}
+
+function resetFormFields() {
+  const defaultValues = {
+    site: "",
+    login: "",
+    lowercase: true,
+    uppercase: true,
+    digits: true,
+    symbols: true,
+    length: 16,
+    counter: 1,
+  };
+
+  document.getElementById("site").value = defaultValues.site;
+  document.getElementById("login").value = defaultValues.login;
+  document.getElementById("lowercase").checked = defaultValues.lowercase;
+  document.getElementById("uppercase").checked = defaultValues.uppercase;
+  document.getElementById("digits").checked = defaultValues.digits;
+  document.getElementById("symbols").checked = defaultValues.symbols;
+  document.getElementById("length").value = defaultValues.length;
+  document.getElementById("counter").value = defaultValues.counter;
 }
