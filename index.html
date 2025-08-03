@@ -1,159 +1,215 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv=X-UA-Compatible content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<title>LessPass Helper</title>
+        <title>LessPass Helper</title>
 
-		<link href="css/bulma.min.css" rel="stylesheet" type="text/css" />
+        <link href="css/bulma.min.css" rel="stylesheet" type="text/css" />
+    </head>
 
-	</head>
+    <body>
+        <div class="section container">
+            <h1 class="title">LessPass Helper</h1>
 
-	<body>
+            <div id="importDatas" class="panel is-primary">
+                <h2 class="panel-heading">Import the JSON file</h2>
+                <div class="panel-block">
+                    <form class="form column is-12">
+                        <div class="field">
+                            <label for="lesspass-emplacement" class="label">
+                                The location of the LessPass WebComponent
+                            </label>
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    <input
+                                        class="input"
+                                        type="text"
+                                        id="lesspass-emplacement"
+                                        placeholder="https://www.lesspass.com"
+                                    />
+                                </div>
+                                <div class="control">
+                                    <span class="button is-static">/</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="lesspass-input" class="label">
+                                LessPass JSON File Input
+                            </label>
+                            <div class="control">
+                                <textarea
+                                    class="textarea has-fixed-size"
+                                    rows="5"
+                                    id="lesspass-input"
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <button
+                                class="button is-primary"
+                                type="button"
+                                onclick="javascript:importData();"
+                            >
+                                Import
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-		<div class="section container">
+            <div
+                id="panel-lesspass-links"
+                style="display: none"
+                class="panel is-link"
+            >
+                <h2 class="panel-heading">LessPass Links</h2>
+                <div id="lesspass-links"></div>
+            </div>
 
-			<h1 class="title">LessPass Helper</h1>
+            <div
+                id="exportDatas"
+                style="display: none"
+                class="panel panel-info"
+            >
+                <h2 class="panel-heading">Export the JSON file</h2>
+                <div class="panel-block column is-12">
+                    <div class="field">
+                        <button
+                            class="button is-info is-fullwidth"
+                            type="button"
+                            onclick="javascript:addPasswordProfileButton();"
+                        >
+                            Add a password's profile
+                        </button>
+                    </div>
+                </div>
 
-			<div id="importDatas" class="panel is-primary">
-				<h2 class="panel-heading">
-					Import the JSON file
-				</h2>
-				<div class="panel-block">
-					<form class="form column is-12">
-						<div class="field">
-							<label for="lesspass-emplacement" class="label">
-								The location of the clone of LessPass Pure
-							</label>
-							<div class="field has-addons">
-								<div class="control is-expanded">
-									<input class="input" type="text" id="lesspass-emplacement" placeholder="file:///C:/[FOLDER]/lesspass-pure/">
-								</div>
-								<div class="control">
-									<span class="button is-static">index.html#/</span>
-								</div>
-							</div>
-						</div>
-						<div class="field">
-							<label for="lesspass-input" class="label">
-								LessPass JSON File Input
-							</label>
-							<div class="control">
-								<textarea class="textarea has-fixed-size" rows="5" id="lesspass-input"></textarea>
-							</div>
-						</div>
-						<div class="field">
-							<button class="button is-primary" type="button" onclick="javascript:importData();">Import</button>
-						</div>
-					</form>
-				</div>
-			</div>
+                <div id="add-setting" style="display: none" class="panel-block">
+                    <form class="form column is-12">
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <input
+                                    type="text"
+                                    class="input"
+                                    id="site"
+                                    name="site"
+                                    placeholder="Site"
+                                />
+                                <span class="icon is-left"> &#127760; </span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <input
+                                    type="text"
+                                    class="input"
+                                    id="login"
+                                    name="login"
+                                    placeholder="Login"
+                                />
+                                <span class="icon is-left"> &#128100; </span>
+                            </div>
+                        </div>
 
-			<div id="panel-lesspass-links" style="display: none;" class="panel is-link">
-				<h2 class="panel-heading">
-					LessPass Links
-				</h2>
-				<div id="lesspass-links" >
-				</div>
-			</div>
+                        <div class="field is-grouped">
+                            <div class="checkboxes">
+                                <label class="checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id="lowercase"
+                                        name="lowercase"
+                                        checked
+                                    />a-z
+                                </label>
+                                <label class="checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id="uppercase"
+                                        name="uppercase"
+                                        checked
+                                    />A-Z
+                                </label>
+                                <label class="checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id="digits"
+                                        name="digits"
+                                        checked
+                                    />0-9
+                                </label>
+                                <label class="checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id="symbols"
+                                        name="symbols"
+                                        checked
+                                    />%!@
+                                </label>
+                            </div>
+                        </div>
 
-			<div id="exportDatas" style="display: none;" class="panel panel-info">
-				<h2 class="panel-heading">
-					Export the JSON file
-				</h2>
-				<div class="panel-block column is-12">
-					<div class="field">
-						<button class="button is-info is-fullwidth" type="button" onclick="javascript:addPasswordProfileButton();">
-							Add a password's profile
-						</button>
-					</div>
-				</div>
+                        <div class="field">
+                            <label for="length" class="label"> Length </label>
+                            <div class="control">
+                                <input
+                                    type="number"
+                                    class="input"
+                                    id="length"
+                                    name="length"
+                                    min="5"
+                                    max="35"
+                                    value="16"
+                                />
+                            </div>
+                        </div>
 
-				<div id="add-setting" style="display: none;" class="panel-block">
-					<form  class="form column is-12">
-						<div class="field">
-							<div class="control has-icons-left">
-								<input type="text" class="input" id="site" name="site" placeholder="Site">
-								<span class="icon is-left">
-									&#127760;
-								</span>
-							</div>
-						</div>
-						<div class="field">
-							<div class="control has-icons-left">
-								<input type="text" class="input" id="login" name="login" placeholder="Login">
-								<span class="icon is-left">
-									&#128100;
-								</span>
-							</div>
-						</div>
+                        <div class="field">
+                            <label for="counter" class="label"> Counter </label>
+                            <div class="control">
+                                <input
+                                    type="number"
+                                    class="input"
+                                    id="counter"
+                                    name="counter"
+                                    min="1"
+                                    value="1"
+                                />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <button
+                                class="button is-link"
+                                type="button"
+                                onclick="javascript:createData()"
+                            >
+                                Create the password's profile
+                            </button>
+                        </div>
+                    </form>
+                </div>
 
-						<div class="field is-grouped">
-							<div class="control">
-								<label class="checkbox">
-									<input type="checkbox" id="lowercase" name="lowercase" checked>a-z
-								</label>
-							</div>
-							<div class="control">
-								<label class="checkbox">
-									<input type="checkbox" id="uppercase" name="uppercase" checked>A-Z
-								</label>
-							</div>
-							<div class="control">
-								<label class="checkbox">
-									<input type="checkbox" id="numbers" name="numbers" checked>0-9
-								</label>
-							</div>
-							<div class="control">
-								<label class="checkbox">
-									<input type="checkbox" id="symbols" name="symbols" checked>%!@
-								</label>
-							</div>
-						</div>
+                <div class="panel-block">
+                    <div id="grp-lesspass-output" class="column is-12">
+                        <div class="field">
+                            <label for="lesspass-output" class="label">
+                                LessPass JSON File Output
+                            </label>
+                            <textarea
+                                class="textarea has-fixed-size"
+                                rows="5"
+                                id="lesspass-output"
+                                readonly
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-						<div class="field">
-							<label for="length" class="label">
-								Length
-							</label>
-							<div class="control">
-								<input type="number" class="input" id="length" name="length" min="5" max="35" value="16">
-							</div>
-						</div>
-
-						<div class="field">
-							<label for="counter" class="label">
-								Counter
-							</label>
-							<div class="control">
-								<input type="number" class="input" id="counter" name="counter" min="1" value="1">
-							</div>
-						</div>
-						<div class="field">
-							<button class="button is-link" type="button" onclick="javascript:createData()">
-								Create the password's profile
-							</button>
-						</div>
-					</form>
-				</div>
-
-				<div class="panel-block">
-					<div id="grp-lesspass-output" class="column is-12">
-						<div class="field">
-							<label for="lesspass-output" class="label">
-								LessPass JSON File Output
-							</label>
-							<textarea class="textarea has-fixed-size" rows="5" id="lesspass-output" readonly></textarea>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-
-		</div>
-
-		<script type="text/javascript" src="js/main.js"></script>
-
-	</body>
+        <script type="text/javascript" src="js/main.js"></script>
+    </body>
 </html>
