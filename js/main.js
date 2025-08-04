@@ -114,7 +114,6 @@ const generateLink = (item, link) => {
     symbols: item.symbols,
     length: item.length,
     counter: item.counter,
-    version: 2,
   });
   return `${link}?${params.toString()}`;
 };
