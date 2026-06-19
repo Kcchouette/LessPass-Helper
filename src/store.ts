@@ -1,5 +1,5 @@
 import Alpine from 'alpinejs';
-import { generatePassword, type PasswordProfile } from 'lesspass';
+import { generatePassword, buildFingerprint, type PasswordProfile, type Fingerprint } from 'lesspass';
 
 interface ProfileWithId extends PasswordProfile {
   id: string;
@@ -21,6 +21,30 @@ function filterProfiles(profiles: ProfileWithId[], query: string): ProfileWithId
   return profiles.filter(p => p.site.toLowerCase().includes(q) || p.login.toLowerCase().includes(q));
 }
 
+const ICON_TO_EMOJI: Record<string, string> = {
+  'fa-hashtag': '#️', 'fa-heart': '❤️', 'fa-hotel': '🏨',
+  'fa-university': '🎓', 'fa-plug': '🔌', 'fa-ambulance': '🚑',
+  'fa-bus': '🚌', 'fa-car': '🚗', 'fa-plane': '✈️',
+  'fa-rocket': '🚀', 'fa-ship': '🚢', 'fa-subway': '🚇',
+  'fa-truck': '🚚', 'fa-jpy': '💴', 'fa-eur': '💶',
+  'fa-btc': '₿', 'fa-usd': '💵', 'fa-gbp': '💷',
+  'fa-archive': '🗄️', 'fa-area-chart': '📈', 'fa-bed': '🛏️',
+  'fa-beer': '🍺', 'fa-bell': '🔔', 'fa-binoculars': '🔭',
+  'fa-birthday-cake': '🎂', 'fa-bomb': '💣', 'fa-briefcase': '💼',
+  'fa-bug': '🐛', 'fa-camera': '📷', 'fa-cart-plus': '🛒',
+  'fa-certificate': '⭐', 'fa-coffee': '☕', 'fa-cloud': '☁️',
+  'fa-comment': '🗨️', 'fa-cube': '📦', 'fa-cutlery': '🍴',
+  'fa-database': '🖥️', 'fa-diamond': '💎', 'fa-exclamation-circle': '❗',
+  'fa-eye': '👁️', 'fa-flag': '🏁', 'fa-flask': '⚗️',
+  'fa-futbol-o': '⚽', 'fa-gamepad': '🎮', 'fa-graduation-cap': '🎓',
+};
+
+export function iconToEmoji(icon: string): string {
+  return ICON_TO_EMOJI[icon] ?? '❓';
+}
+
+(window as any).iconToEmoji = iconToEmoji;
+
 interface AddProfileForm {
   site: string;
   login: string;
@@ -36,6 +60,7 @@ interface AppStore {
   profiles: ProfileWithId[];
   query: string;
   masterPassword: string;
+  fingerprint: Fingerprint | null;
   genSite: string;
   genLogin: string;
   genLowercase: boolean;
@@ -58,6 +83,7 @@ interface AppStore {
   removeProfile(id: string): void;
   exportJson(): void;
   addSiteProfile(): void;
+  updateFingerprint(): void;
 }
 
 const profileDefaults = {
@@ -73,6 +99,7 @@ Alpine.store('app', {
   profiles: [] as ProfileWithId[],
   query: '',
   masterPassword: '',
+  fingerprint: null as Fingerprint | null,
   genSite: '',
   genLogin: '',
   genLowercase: profileDefaults.lowercase,
@@ -176,6 +203,25 @@ Alpine.store('app', {
     this.addSite = { site: '', login: '', ...profileDefaults };
     this.error = '';
   },
+
+  updateFingerprint() {
+    const pwd = this.masterPassword;
+    if (!pwd) {
+      this.fingerprint = null;
+      return;
+    }
+    buildFingerprint(pwd).then(fp => {
+      this.fingerprint = fp;
+    });
+  },
 } satisfies AppStore);
 
 Alpine.start();
+
+let fingerprintTimer: ReturnType<typeof setTimeout>;
+Alpine.effect(() => {
+  const store = Alpine.store('app');
+  const _pwd = store.masterPassword;
+  clearTimeout(fingerprintTimer);
+  fingerprintTimer = setTimeout(() => store.updateFingerprint(), 500);
+});

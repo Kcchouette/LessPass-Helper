@@ -42,6 +42,11 @@
             placeholder="Mot de passe maître"
             x-model="$store.app.masterPassword"
           />
+          <div class="fingerprint" x-show="$store.app.fingerprint">
+            <template x-for="(finger, i) in $store.app.fingerprint" :key="i">
+              <span :style="{ color: finger.color }" x-text="iconToEmoji(finger.icon)"></span>
+            </template>
+          </div>
           <input
             type="text"
             placeholder="Site (ex: github.com)"

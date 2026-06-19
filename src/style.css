@@ -96,3 +96,11 @@ output {
 .form-add label:has(input[type="checkbox"]) {
   margin-bottom: 0;
 }
+
+.fingerprint {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  padding: 0.25rem 0;
+  user-select: none;
+}
