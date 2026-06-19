@@ -1,7 +1,46 @@
+:root {
+  --pico-font-size: 87.5%;
+  --pico-typography-spacing-vertical: 0.75rem;
+}
+
+h1 {
+  font-size: 1.5rem !important;
+}
+
+h2 {
+  font-size: 1.15rem !important;
+  margin-bottom: 0.5rem;
+}
+
+header {
+  padding: 0.75rem 0 0.5rem;
+}
+
+header p {
+  margin: 0;
+}
+
+section {
+  padding: 0.75rem 0;
+}
+
+article {
+  padding: 0.75rem;
+  margin: 0;
+}
+
+article header {
+  padding: 0.5rem 0.75rem;
+}
+
+article footer {
+  padding: 0.5rem 0.75rem;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.75rem;
 }
 
 section:has(form) {
@@ -9,23 +48,51 @@ section:has(form) {
   padding-left: 1rem;
 }
 
-header p small {
-  font-size: 0.7em;
-  background: var(--pico-primary);
-  color: var(--pico-primary-inverse);
-  padding: 0.1em 0.5em;
-  border-radius: 1em;
-  margin-left: 0.5em;
-}
-
 output {
   display: block;
   font-family: monospace;
-  font-size: 1.2em;
+  font-size: 1rem;
   letter-spacing: 0.05em;
   background: var(--pico-card-background-color);
-  padding: 0.5em 1em;
+  padding: 0.4em 0.75em;
   border-radius: var(--pico-border-radius);
   border: 1px solid var(--pico-primary);
-  margin: 1rem 0 0.25rem 0;
+  margin: 0.75rem 0 0.25rem 0;
+  user-select: all;
+  cursor: pointer;
+}
+
+.login-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--pico-border-radius);
+  transition: background 0.2s;
+}
+
+.login-copy:hover {
+  background: var(--pico-primary-focus);
+}
+
+.login-copy .copied {
+  color: var(--pico-ins-color);
+  font-size: 0.8rem;
+}
+
+.form-add {
+  background: var(--pico-card-background-color);
+  border: 1px solid var(--pico-card-border-color, var(--pico-muted-border-color));
+  border-radius: var(--pico-border-radius);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-add .grid {
+  gap: 0.5rem;
+}
+
+.form-add label:has(input[type="checkbox"]) {
+  margin-bottom: 0;
 }

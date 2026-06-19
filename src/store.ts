@@ -21,6 +21,17 @@ function filterProfiles(profiles: ProfileWithId[], query: string): ProfileWithId
   return profiles.filter(p => p.site.toLowerCase().includes(q) || p.login.toLowerCase().includes(q));
 }
 
+interface AddProfileForm {
+  site: string;
+  login: string;
+  lowercase: boolean;
+  uppercase: boolean;
+  digits: boolean;
+  symbols: boolean;
+  length: number;
+  counter: number;
+}
+
 interface AppStore {
   profiles: ProfileWithId[];
   query: string;
@@ -37,6 +48,7 @@ interface AppStore {
   error: string;
   importText: string;
   exportedJson: string;
+  addSite: AddProfileForm;
 
   readonly filteredProfiles: ProfileWithId[];
 
@@ -45,6 +57,7 @@ interface AppStore {
   generatePassword(): Promise<void>;
   removeProfile(id: string): void;
   exportJson(): void;
+  addSiteProfile(): void;
 }
 
 const defaults = {
@@ -67,6 +80,7 @@ Alpine.store('app', {
   error: '',
   importText: '',
   exportedJson: '',
+  addSite: { site: '', login: '', ...defaults },
 
   get filteredProfiles(): ProfileWithId[] {
     return filterProfiles(this.profiles, this.query);
@@ -142,6 +156,20 @@ Alpine.store('app', {
   exportJson() {
     const clean = this.profiles.map(({ id, ...rest }) => rest);
     this.exportedJson = JSON.stringify(clean, null, '\t');
+  },
+
+  addSiteProfile() {
+    if (!this.addSite.site) {
+      this.error = 'Veuillez entrer le nom du site';
+      return;
+    }
+    const profile: PasswordProfile = { ...this.addSite };
+    const id = profileId(profile);
+    if (!this.profiles.some(p => p.id === id)) {
+      this.profiles = [...this.profiles, { ...profile, id }];
+    }
+    this.addSite = { site: '', login: '', ...defaults };
+    this.error = '';
   },
 } satisfies AppStore);
 

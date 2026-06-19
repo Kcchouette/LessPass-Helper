@@ -107,7 +107,17 @@
               <header>
                 <strong x-text="profile.site"></strong>
               </header>
-              <p>Login : <strong x-text="profile.login"></strong></p>
+              <p>
+                Login :
+                <span
+                  class="login-copy"
+                  @click="navigator.clipboard.writeText(profile.login); $el.querySelector('.copied').style.display = 'inline'; setTimeout(() => $el.querySelector('.copied').style.display = 'none', 1200)"
+                  title="Copier le login"
+                >
+                  <strong x-text="profile.login"></strong>
+                  <small class="copied" style="display:none">Copié !</small>
+                </span>
+              </p>
               <p>
                 <small>
                   <span x-show="profile.lowercase">a-z </span>
@@ -124,6 +134,48 @@
               </footer>
             </article>
           </template>
+        </div>
+      </section>
+
+      <!-- Ajouter un site -->
+      <section>
+        <h2>Ajouter un site</h2>
+        <div class="form-add">
+          <div class="grid">
+            <label>
+              Site
+              <input type="text" placeholder="github.com" x-model="$store.app.addSite.site" />
+            </label>
+            <label>
+              Login
+              <input type="text" placeholder="user@email.com" x-model="$store.app.addSite.login" />
+            </label>
+          </div>
+          <div class="grid">
+            <label>
+              <input type="checkbox" x-model="$store.app.addSite.lowercase" checked /> a-z
+            </label>
+            <label>
+              <input type="checkbox" x-model="$store.app.addSite.uppercase" checked /> A-Z
+            </label>
+            <label>
+              <input type="checkbox" x-model="$store.app.addSite.digits" checked /> 0-9
+            </label>
+            <label>
+              <input type="checkbox" x-model="$store.app.addSite.symbols" checked /> %!@
+            </label>
+          </div>
+          <div class="grid">
+            <label>
+              Longueur
+              <input type="number" min="5" max="35" x-model.number="$store.app.addSite.length" />
+            </label>
+            <label>
+              Compteur
+              <input type="number" min="1" x-model.number="$store.app.addSite.counter" />
+            </label>
+          </div>
+          <button @click="$store.app.addSiteProfile()">Ajouter</button>
         </div>
       </section>
 
