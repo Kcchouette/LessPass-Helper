@@ -205,13 +205,8 @@ Alpine.store('app', {
   },
 
   updateFingerprint() {
-    const pwd = this.masterPassword;
-    if (!pwd) {
-      this.fingerprint = null;
-      return;
-    }
-    buildFingerprint(pwd).then(fp => {
-      this.fingerprint = fp;
+    buildFingerprint(this.masterPassword || '').then(fp => {
+      this.fingerprint = fp as Fingerprint;
     });
   },
 } satisfies AppStore);

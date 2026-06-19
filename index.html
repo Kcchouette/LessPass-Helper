@@ -37,15 +37,17 @@
       <section>
         <h2>Générer un mot de passe</h2>
         <form @submit.prevent="$store.app.generatePassword()">
-          <input
-            type="password"
-            placeholder="Mot de passe maître"
-            x-model="$store.app.masterPassword"
-          />
-          <div class="fingerprint" x-show="$store.app.fingerprint">
-            <template x-for="(finger, i) in $store.app.fingerprint" :key="i">
-              <span :style="{ color: finger.color }" x-text="iconToEmoji(finger.icon)"></span>
-            </template>
+          <div class="password-field">
+            <input
+              type="password"
+              placeholder="Mot de passe maître"
+              x-model="$store.app.masterPassword"
+            />
+            <div class="fingerprint-inline">
+              <template x-for="(finger, i) in $store.app.fingerprint" :key="i">
+                <span :style="{ color: finger.color }" x-text="iconToEmoji(finger.icon)"></span>
+              </template>
+            </div>
           </div>
           <input
             type="text"
@@ -111,6 +113,7 @@
             <article>
               <header>
                 <strong x-text="profile.site"></strong>
+                <button class="delete" @click="$store.app.removeProfile(profile.id)" title="Supprimer">&times;</button>
               </header>
               <p>
                 Login :
@@ -134,8 +137,7 @@
                 </small>
               </p>
               <footer>
-                <button @click="$store.app.fillGenerator(profile)">Générer</button>
-                <button class="secondary" @click="$store.app.removeProfile(profile.id)">Supprimer</button>
+                <button @click="$store.app.fillGenerator(profile); $store.app.generatePassword()" style="margin: 0 auto;">Générer</button>
               </footer>
             </article>
           </template>
