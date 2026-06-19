@@ -60,13 +60,13 @@ interface AppStore {
   addSiteProfile(): void;
 }
 
-const defaults = {
-  genLowercase: true,
-  genUppercase: true,
-  genDigits: true,
-  genSymbols: true,
-  genLength: 16,
-  genCounter: 1,
+const profileDefaults = {
+  lowercase: true,
+  uppercase: true,
+  digits: true,
+  symbols: true,
+  length: 16,
+  counter: 1,
 };
 
 Alpine.store('app', {
@@ -75,12 +75,17 @@ Alpine.store('app', {
   masterPassword: '',
   genSite: '',
   genLogin: '',
-  ...defaults,
+  genLowercase: profileDefaults.lowercase,
+  genUppercase: profileDefaults.uppercase,
+  genDigits: profileDefaults.digits,
+  genSymbols: profileDefaults.symbols,
+  genLength: profileDefaults.length,
+  genCounter: profileDefaults.counter,
   generatedPassword: '',
   error: '',
   importText: '',
   exportedJson: '',
-  addSite: { site: '', login: '', ...defaults },
+  addSite: { site: '', login: '', ...profileDefaults },
 
   get filteredProfiles(): ProfileWithId[] {
     return filterProfiles(this.profiles, this.query);
@@ -168,7 +173,7 @@ Alpine.store('app', {
     if (!this.profiles.some(p => p.id === id)) {
       this.profiles = [...this.profiles, { ...profile, id }];
     }
-    this.addSite = { site: '', login: '', ...defaults };
+    this.addSite = { site: '', login: '', ...profileDefaults };
     this.error = '';
   },
 } satisfies AppStore);
