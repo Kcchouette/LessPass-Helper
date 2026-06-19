@@ -1,0 +1,22 @@
+{
+  "name": "lesspass-helper",
+  "version": "2.0.0",
+  "description": "LessPass Helper - Offline password generator companion",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "dependencies": {
+    "@picocss/pico": "^2.1.1",
+    "alpinejs": "^3.14.9"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^8.0.0",
+    "vitest": "^4.0.16"
+  }
+}

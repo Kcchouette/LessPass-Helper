@@ -1,16 +1,23 @@
-# Lesspass Helper
+# LessPass Helper
 
-An offline webUI to create and generate JSON from your password's profile from LessPass.
+Générateur de mots de passe hors ligne basé sur [LessPass](https://github.com/lesspass/lesspass).
 
-## How to use?
+## Utilisation
 
-You can only use this software if you're using [LessPass](https://github.com/lesspass/lesspass) as you password manager.
+1. Ouvrir `https://kcchouette.github.io/LessPass-Helper/`
+2. (optionnel) Importer un fichier JSON LessPass
+3. Saisir un mot de passe maître, un site, un login
+4. Cliquer "Générer" pour obtenir un mot de passe déterministe
 
-Here some example of LessPass WebComponent URL, you can either use:
-- https://lesspass.com/
-- https://kcchouette.github.io/lesspass/
-- a local version of lesspass, eg https://github.com/Kcchouette/lesspass/tree/lesspass-html, and load it using a web server, eg `python -m http.server <PORT>`
+## Développement
 
-## External Ressources
+```bash
+npm install
+npm run dev      # Serveur de développement Vite
+npm run build    # Build production vers dist/
+npm run preview  # Prévisualisation locale du build
+```
 
-`css/bulma.min.css` come from [Bulma](https://bulma.io/) v1.0.4<br>
+## Licence
+
+GPL v3

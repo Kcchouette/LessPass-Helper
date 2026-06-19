@@ -1,0 +1,31 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+section:has(form) {
+  border-left: 3px solid var(--pico-primary);
+  padding-left: 1rem;
+}
+
+header p small {
+  font-size: 0.7em;
+  background: var(--pico-primary);
+  color: var(--pico-primary-inverse);
+  padding: 0.1em 0.5em;
+  border-radius: 1em;
+  margin-left: 0.5em;
+}
+
+output {
+  display: block;
+  font-family: monospace;
+  font-size: 1.2em;
+  letter-spacing: 0.05em;
+  background: var(--pico-card-background-color);
+  padding: 0.5em 1em;
+  border-radius: var(--pico-border-radius);
+  border: 1px solid var(--pico-primary);
+  margin: 1rem 0 0.25rem 0;
+}
